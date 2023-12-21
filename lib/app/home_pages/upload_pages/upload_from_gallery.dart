@@ -191,6 +191,8 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
     final XFile? pickedFile = await ImagePicker()
         .pickVideo(source: ImageSource.gallery); // why 2 times
 
+    print(pickedFile!.path);
+
     if (pickedFile != null) {
       setState(() {
         _selectedVideo = File(pickedFile.path);

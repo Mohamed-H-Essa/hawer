@@ -23,9 +23,19 @@ class _VideoWidgetState extends State<VideoWidget> {
     super.initState();
     // _controller = VideoPlayerController.networkUrl(Uri.parse(
     //     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
+
+    bool videoExists = false;
+    File(widget.videoPath).exists().then((value) {
+      videoExists = value;
+    });
+    // check if the video path exists in local storage before inserting it into the video player and set videoExists to true if it does
+
+    if (widget.videoPath.isEmpty || !videoExists) {
+      print('video doesn\'t exist');
+    } else {}
+
     _controller = VideoPlayerController.file(File(widget.videoPath))
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
   }

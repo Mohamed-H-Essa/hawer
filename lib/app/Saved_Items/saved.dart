@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hawer_app/app/home_pages/record_pages/v2_video.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/constants.dart';
 import '../home_pages/home.dart';
 import '../settings_pages/settings.dart';
@@ -12,7 +17,37 @@ class Saved extends StatefulWidget {
 
 class _SavedState extends State<Saved> {
   // bool _showCheckboxes = true;
+  bool loading = true;
+  String dirPath = '';
   // bool _throwShotAway=true;
+  @override
+  void initState() {
+    super.initState();
+    load_path_video();
+  }
+
+  Future<void> load_path_video() async {
+    loading = true;
+    print('loading...');
+    final Directory extDir = await getApplicationDocumentsDirectory();
+
+    //get videoPath from shared preferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String? videoPath = prefs.getString('videoPath');
+
+    setState(() {
+      dirPath = '${extDir.path}/$videoPath';
+      if (videoPath == null || videoPath.isEmpty) {
+        loading = true;
+        return;
+      }
+      print(dirPath);
+      loading = false;
+      print('loading donee');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,18 +63,26 @@ class _SavedState extends State<Saved> {
         padding: const EdgeInsets.only(top: 37),
         child: Directionality(
           textDirection: TextDirection.ltr,
-          child: ListView(
-            children: [
-              GestureDetector(
-                  onLongPress: () {
-                    setState(() {});
-                  },
-                  child: buildListTile("images/image.png", "List item",
-                      "Supporting line text lorem ipsum dolo")),
-              const SizedBox(height: 21),
-              buildListTile("images/image.png", "List item",
-                  "Supporting line text lorem ipsum dolo"),
-            ],
+          child: ListView.builder(
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              if (index == 0 && loading == false) {
+                return Container(
+                  color: Colors.red,
+                  height: 20,
+                  child: VideoWidget(
+                    videoPath: dirPath,
+                  ),
+                );
+              }
+              return GestureDetector(
+                onLongPress: () {
+                  setState(() {});
+                },
+                child: buildListTile("images/image.png", "List item",
+                    "Supporting line text lorem ipsum dolo"),
+              );
+            },
           ),
         ),
       ),

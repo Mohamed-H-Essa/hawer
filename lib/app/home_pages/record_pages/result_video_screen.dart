@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:gallery_saver_plus/gallery_saver.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:hawer_app/app/home_pages/record_pages/v2_video.dart';
 import 'package:hawer_app/core/constants.dart';
+import 'package:hawer_app/core/save_relative_path.dart';
 
 class ResultVideoScreen extends StatefulWidget {
   const ResultVideoScreen({
@@ -18,7 +21,7 @@ class ResultVideoScreen extends StatefulWidget {
 }
 
 class _ResultVideoScreenState extends State<ResultVideoScreen> {
-  bool snackShowen = false;
+  bool isSaved = false;
   String snackMessage = "";
   @override
   void initState() {
@@ -92,17 +95,32 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
               padding: const EdgeInsets.only(left: 30.0, right: 30),
               child: MaterialButton(
                 onPressed: () async {
-                  showCenterSnackBar(context, "جاري الحفظ");
-                  //todo
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(isSaved ? 'تم الحفظ بالفعل' : 'جاري الحفظ'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                  if (isSaved) return;
+                  print(widget.videoPath);
+
                   GallerySaver.saveVideo(widget.videoPath)
                       .then((bool? success) {
                     setState(() {
-                      if (success == null || !success) {
-                        showCenterSnackBar(context, "حدث خطاء!!");
+                      if (isSaved) {
+                        return;
                       } else {
-                        showCenterSnackBar(context, "تم حفظ الفيديو بنجاح");
+                        isSaved = true;
+
+                        if (success == null || !success) {
+                          showCenterSnackBar(context, "حدث خطاء!!");
+                        } else {
+                          showCenterSnackBar(context, "تم حفظ الفيديو بنجاح");
+                          saveRelativePath(widget.videoPath);
+                        }
+                        //_showSavedSuccessfully_dialog(context);
                       }
-                      _showSavedSuccessfully_dialog(context);
                     });
                   });
                 },
@@ -162,7 +180,12 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
     Overlay.of(context).insert(overlayEntry);
 
     Future.delayed(const Duration(seconds: 2), () {
-      Overlay.of(context).dispose();
+      try {
+        // Overlay.of(context).remove(overlayEntry) ;
+        overlayEntry.remove();
+      } catch (e) {
+        print(e);
+      }
     });
   }
 
