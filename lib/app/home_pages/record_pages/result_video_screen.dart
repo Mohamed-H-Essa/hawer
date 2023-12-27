@@ -82,6 +82,7 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
               ),
               child: Text(
                 widget.resultMessage,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.black,

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hawer_app/app/home_pages/record_pages/result_screen.dart';
 import 'package:hawer_app/core/constants.dart';
 import 'package:hawer_app/core/upload_video_method.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,6 +29,14 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
       _videoController!.removeListener(() {});
       await _videoController!.dispose();
     }
+  }
+
+  void _uploadVideo(String videoPath) {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => ResultScreen(
+              videoPath: videoPath,
+            )));
+    // uploadVideo(File(videoPath));
   }
 
   @override
@@ -173,17 +182,7 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
 
   Future<void> _checkAndRequestPermission(BuildContext ctx) async {
     await Permission.manageExternalStorage.request();
-    // final status = await ImagePicker().pickVideo(
-    //   source: ImageSource.gallery,
-    // );
-
-    // if (status == null) {
-    //   print('Permission denied');
-    // } else {
-    //   await _pickAndUploadVideo();
-    // }
     _pickAndUploadVideo();
-
     Navigator.of(context).pop();
   }
 
@@ -191,19 +190,22 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
     final XFile? pickedFile = await ImagePicker()
         .pickVideo(source: ImageSource.gallery); // why 2 times
 
-    print(pickedFile!.path);
-
-    if (pickedFile != null) {
-      setState(() {
-        _selectedVideo = File(pickedFile.path);
-        _videoController = VideoPlayerController.file(_selectedVideo!)
-          ..initialize().then((_) {
-            // _videoController!.play();
-          });
-      });
-
-      await uploadVideo(_selectedVideo!);
+    if (pickedFile == null) {
+      return;
     }
+
+    print(pickedFile.path);
+
+    setState(() {
+      _selectedVideo = File(pickedFile.path);
+      _videoController = VideoPlayerController.file(_selectedVideo!)
+        ..initialize().then((_) {
+          // _videoController!.play();
+        });
+    });
+
+    _uploadVideo(_selectedVideo!.path);
+    // await uploadVideo(_selectedVideo!);
   }
 
   void showCenterSnackBar(BuildContext context, String message) {

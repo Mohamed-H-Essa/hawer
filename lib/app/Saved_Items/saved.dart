@@ -64,23 +64,26 @@ class _SavedState extends State<Saved> {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: ListView.builder(
-            itemCount: 3,
+            // itemCount: 100,
             itemBuilder: (context, index) {
-              if (index == 0 && loading == false) {
-                return Container(
-                  color: Colors.red,
-                  height: 20,
-                  child: VideoWidget(
-                    videoPath: dirPath,
-                  ),
-                );
-              }
+              //todo:Add video player
+              // if (index == 0 && loading == false) {
+              //   return Container(
+              //     color: Colors.red,
+              //     height: 20,
+              //     child: VideoWidget(
+              //       videoPath: dirPath,
+              //     ),
+              //   );
+              // }
               return GestureDetector(
                 onLongPress: () {
                   setState(() {});
                 },
-                child: buildListTile("images/image.png", "List item",
-                    "Supporting line text lorem ipsum dolo"),
+                child: buildListTile(
+                    "images/image.png",
+                    "${index % 3 == 0 ? "Hello" : "Pleased"} ${index % 2 == 0 ? "hi" : ""} ${index % 4 == 0 ? "Thanks" : ""}  ${index % 5 == 0 ? "Pleased" : "word"} ",
+                    "December 2${(index + index * 19) % 9}, 2023 ${(index * 3) % 5}${(index * 4) % 5}:${(index * 4) % 5}${(index * 3) % 5} AM"),
               );
             },
           ),
