@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:hawer_app/app/home_pages/record_pages/v2_video.dart';
 import 'package:hawer_app/core/constants.dart';
 import 'package:hawer_app/core/save_relative_path.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ResultVideoScreen extends StatefulWidget {
   const ResultVideoScreen({
@@ -39,112 +41,151 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        "نتيجة العملية :",
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w900,
-                            color: Constants.darkBlue),
-                      )),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              // height: 200,
-              height: 400,
-              // child: VideoDisplayWidget(
-              //   videoPath: widget.videoPath,
-              // ),
-              child: VideoWidget(
-                videoPath: widget.videoPath,
-              ),
-            ),
-// todo beautiful container to display the below text with rounded edges and the proper font etc
-            // todo: Beautiful container to display the below text with rounded edges and the proper font etc
-            Container(
-              padding: EdgeInsets.all(16),
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 189, 225, 255),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                widget.resultMessage,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(left: 30.0, right: 30),
-              child: MaterialButton(
-                onPressed: () async {
-                  ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(isSaved ? 'تم الحفظ بالفعل' : 'جاري الحفظ'),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
-                  if (isSaved) return;
-                  print(widget.videoPath);
-
-                  GallerySaver.saveVideo(widget.videoPath)
-                      .then((bool? success) {
-                    setState(() {
-                      if (isSaved) {
-                        return;
-                      } else {
-                        isSaved = true;
-
-                        if (success == null || !success) {
-                          showCenterSnackBar(context, "حدث خطاء!!");
-                        } else {
-                          showCenterSnackBar(context, "تم حفظ الفيديو بنجاح");
-                          saveRelativePath(widget.videoPath);
-                        }
-                        //_showSavedSuccessfully_dialog(context);
-                      }
-                    });
-                  });
-                },
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(60),
-                    side: BorderSide.none),
-                color: Constants.darkBlue,
-                height: 60,
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
                   children: [
-                    (Text(
-                      "حفظ",
-                      style: TextStyle(fontSize: 17.28, color: Colors.white),
-                    )),
+                    Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "نتيجة العملية :",
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w900,
+                              color: Constants.darkBlue),
+                        )),
                   ],
                 ),
               ),
-            ),
-          ],
+              Container(
+                width: double.infinity,
+                // height: 200,
+                height: 400,
+                // child: VideoDisplayWidget(
+                //   videoPath: widget.videoPath,
+                // ),
+                child: VideoWidget(
+                  videoPath: widget.videoPath,
+                ),
+              ),
+              // todo beautiful container to display the below text with rounded edges and the proper font etc
+              // todo: Beautiful container to display the below text with rounded edges and the proper font etc
+              Container(
+                padding: EdgeInsets.all(16),
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 189, 225, 255),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  widget.resultMessage,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 30.0, right: 30),
+                child: MaterialButton(
+                  onPressed: () async {
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content:
+                            Text(isSaved ? 'تم الحفظ بالفعل' : 'جاري الحفظ'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+
+                    Directory? directory = await getExternalStorageDirectory();
+                    if (directory == null) {
+                      print("d is null");
+                      return;
+                    }
+                    List<String> ns = directory.path.split('/');
+                    //make a loop to get the path before the word 'Android'
+
+                    String newPath = "";
+                    for (int i = 0; i < ns.length - 1; i++) {
+                      if (ns[i] == "Android") {
+                        break;
+                      }
+                      newPath += ns[i] + "/";
+                    }
+                    newPath += 'HAWER';
+                    directory = Directory(newPath);
+                    print(directory.path);
+
+                    File fileDef = File(widget.videoPath);
+                    bool exists = await fileDef.exists();
+                    print(newPath);
+                    // newPath =
+                    //     '$newPath/${DateTime.now().toIso8601String()}.mp4';
+                    // newPath = '$newPath/${0}.mp4';
+
+                    print(newPath);
+                    File newFileDef = File(newPath);
+                    await newFileDef.create(recursive: true);
+                    print("$exists : ${widget.videoPath}");
+
+                    fileDef = await fileDef.copy(newFileDef.path);
+
+                    Uint8List bytes = await fileDef.readAsBytes();
+                    await fileDef.writeAsBytes(bytes);
+
+                    if (isSaved) return;
+                    print(widget.videoPath);
+                    GallerySaver.saveVideo(widget.videoPath)
+                        .then((bool? success) {
+                      setState(() {
+                        if (isSaved) {
+                          return;
+                        } else {
+                          isSaved = true;
+
+                          if (success == null || !success) {
+                            showCenterSnackBar(context, "حدث خطاء!!");
+                          } else {
+                            showCenterSnackBar(context, "تم حفظ الفيديو بنجاح");
+                            saveRelativePath(widget.videoPath);
+                          }
+                          //_showSavedSuccessfully_dialog(context);
+                        }
+                      });
+                    });
+                  },
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(60),
+                      side: BorderSide.none),
+                  color: Constants.darkBlue,
+                  height: 60,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      (Text(
+                        "حفظ",
+                        style: TextStyle(fontSize: 17.28, color: Colors.white),
+                      )),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          //SizedBox(height: 20),
         ),
-        //SizedBox(height: 20),
       ),
     );
   }

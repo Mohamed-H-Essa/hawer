@@ -1,14 +1,15 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
 
-Future<String> uploadVideo(File videoFile) async {
+Future<Either<String, String>> uploadVideo(File videoFile) async {
   try {
     debugPrint(" Uploading video...");
     Dio dio = Dio();
     String uploadUrl =
-        'https://flask-nn-qyu5kdlwya-uc.a.run.app/'; // Replace with your actual upload endpoint
+        'https://model-flask-tleoxgdzsq-lm.a.run.app/'; // Replace with your actual upload endpoint
 
     FormData formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(
@@ -20,10 +21,14 @@ Future<String> uploadVideo(File videoFile) async {
     print("Right before calling post..");
     final res = await dio.post(uploadUrl, data: formData);
     print(res);
-    return res.data['message'];
+    if (res.statusCode != 200) {
+      return Left("Error uploading video: ${res.data['message']}");
+    }
+
     print('Video uploaded successfully');
+    return Right(res.data['message']);
   } catch (error) {
     print('Error uploading video: $error');
-    return "Error uploading video: $error";
+    return Left("Error uploading video: $error");
   }
 }

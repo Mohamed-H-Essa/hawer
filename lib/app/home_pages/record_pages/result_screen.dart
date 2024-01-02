@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
+import 'package:hawer_app/app/home_pages/record_pages/error_page.dart';
 import 'package:hawer_app/app/home_pages/record_pages/loading_screen.dart';
 import 'package:hawer_app/app/home_pages/record_pages/result_video_screen.dart';
 import 'package:hawer_app/core/upload_video_method.dart';
@@ -21,7 +23,7 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  Future<String>? future;
+  Future<Either<String, String>>? future;
   @override
   void initState() {
     super.initState();
@@ -31,15 +33,33 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String>(
+    return FutureBuilder<Either<String, String>>(
         future: future,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             print(snapshot.toString());
-            return ResultVideoScreen(
-              videoPath: widget.videoPath,
-              resultMessage: snapshot.requireData,
+            bool error = true;
+            String res = '';
+            snapshot.requireData.fold(
+              (l) {
+                error = true;
+                res = l;
+              },
+              (r) {
+                error = false;
+                res = r;
+                return print(r);
+              },
             );
+
+            return error
+                ? ErrorPage(
+                    error: res,
+                  )
+                : ResultVideoScreen(
+                    videoPath: widget.videoPath,
+                    resultMessage: res,
+                  );
           } else {
             return const LoadingScreen();
           }
