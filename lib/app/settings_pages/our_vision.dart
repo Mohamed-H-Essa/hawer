@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hawer_app/app/settings_pages/settings.dart';
 
 import '../../core/constants.dart';
-import '../Saved_Items/saved.dart';
+import '../Saved_Items/saved_page.dart';
 import '../home_pages/home.dart';
+
 class OurVision extends StatefulWidget {
   const OurVision({Key? key}) : super(key: key);
 
@@ -16,13 +17,22 @@ class _OurVisionState extends State<OurVision> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-      AppBar(title: const Text ("رؤيتنا",style: TextStyle(fontSize:22),),
-        actions: [Padding(
-          padding: const EdgeInsets.only(left: 15.0),
-            child: IconButton(icon: const Icon(CupertinoIcons.arrow_left), onPressed: () { Navigator.pop(context); },)
-        )],
-         leading: const SizedBox(),
+      appBar: AppBar(
+        title: const Text(
+          "رؤيتنا",
+          style: TextStyle(fontSize: 22),
+        ),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: IconButton(
+                icon: const Icon(CupertinoIcons.arrow_left),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ))
+        ],
+        leading: const SizedBox(),
         backgroundColor: Constants.darkBlue,
       ),
       bottomNavigationBar: BottomAppBar(
@@ -34,31 +44,31 @@ class _OurVisionState extends State<OurVision> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  const Settings(),
+                        builder: (context) => const Settings(),
                       ),
                     );
                   },
                   child: Image.asset("images/Settings.png")),
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  const Saved(),
+                        builder: (context) => const SavedScreen(),
                       ),
                     );
                   },
                   child: Image.asset("images/Bookmark.png")),
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  const Home(),
+                        builder: (context) => const Home(),
                       ),
                     );
                   },
@@ -71,16 +81,19 @@ class _OurVisionState extends State<OurVision> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 34,),
-             Padding(
-               padding: EdgeInsets.only(right:22,left: 23),
-               child: Text("تأهيل المجتمع على التعامل السَّلس والسليم مع متحدثي لغة الاشارة واعطائهم حقوقهم التي تكفل حياة انسانية كريمة تجعل منهم اشخاص قادرين على الاندماج في المجتمع مما يتيح الاستفادة من قدراتهم ومواهبهم وتبادل الثقة بينهم وبين البيئة المحيطة الذي ينتج عنه التنوع في الانتاج والتميّز والإبداع في شتَّى مناحي الحياة"
-                 ,style: TextStyle(fontSize: 16),),
-             ),
-
-          ],),
+            SizedBox(
+              height: 34,
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: 22, left: 23),
+              child: Text(
+                "تأهيل المجتمع على التعامل السَّلس والسليم مع متحدثي لغة الاشارة واعطائهم حقوقهم التي تكفل حياة انسانية كريمة تجعل منهم اشخاص قادرين على الاندماج في المجتمع مما يتيح الاستفادة من قدراتهم ومواهبهم وتبادل الثقة بينهم وبين البيئة المحيطة الذي ينتج عنه التنوع في الانتاج والتميّز والإبداع في شتَّى مناحي الحياة",
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          ],
+        ),
       ),
-
     );
   }
 }

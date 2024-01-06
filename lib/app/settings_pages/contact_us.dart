@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hawer_app/app/settings_pages/settings.dart';
 
 import '../../core/constants.dart';
-import '../Saved_Items/saved.dart';
+import '../Saved_Items/saved_page.dart';
 import '../home_pages/home.dart';
+
 class ContactUs extends StatefulWidget {
   const ContactUs({Key? key}) : super(key: key);
 
@@ -16,13 +17,22 @@ class _ContactUsState extends State<ContactUs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-      AppBar(title: const Text ("تواصل معنا",style: TextStyle(fontSize:22),),
-        actions: [Padding(
-          padding: const EdgeInsets.only(left:15.0),
-            child: IconButton(icon: const Icon(CupertinoIcons.arrow_left), onPressed: () { Navigator.pop(context); },)
-        )],
-         leading: const SizedBox(),
+      appBar: AppBar(
+        title: const Text(
+          "تواصل معنا",
+          style: TextStyle(fontSize: 22),
+        ),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: IconButton(
+                icon: const Icon(CupertinoIcons.arrow_left),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ))
+        ],
+        leading: const SizedBox(),
         backgroundColor: Constants.darkBlue,
       ),
       bottomNavigationBar: BottomAppBar(
@@ -34,31 +44,31 @@ class _ContactUsState extends State<ContactUs> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  const Settings(),
+                        builder: (context) => const Settings(),
                       ),
                     );
                   },
                   child: Image.asset("images/Settings.png")),
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  const Saved(),
+                        builder: (context) => const SavedScreen(),
                       ),
                     );
                   },
                   child: Image.asset("images/Bookmark.png")),
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  const Home(),
+                        builder: (context) => const Home(),
                       ),
                     );
                   },
@@ -70,15 +80,18 @@ class _ContactUsState extends State<ContactUs> {
       body: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: 34,),
+          SizedBox(
+            height: 34,
+          ),
           Padding(
             padding: EdgeInsets.only(left: 23),
-            child: Text("7awer.support@gmail.com"
-              ,style: TextStyle(fontSize: 16),),
+            child: Text(
+              "7awer.support@gmail.com",
+              style: TextStyle(fontSize: 16),
+            ),
           ),
-
-        ],),
-
+        ],
+      ),
     );
   }
 }

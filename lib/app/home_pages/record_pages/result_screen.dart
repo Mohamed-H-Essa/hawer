@@ -37,7 +37,6 @@ class _ResultScreenState extends State<ResultScreen> {
         future: future,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            print(snapshot.toString());
             bool error = true;
             String res = '';
             snapshot.requireData.fold(

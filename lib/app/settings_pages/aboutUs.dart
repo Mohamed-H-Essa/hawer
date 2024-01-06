@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hawer_app/app/settings_pages/settings.dart';
 
 import '../../core/constants.dart';
-import '../Saved_Items/saved.dart';
+import '../Saved_Items/saved_page.dart';
 import '../home_pages/home.dart';
+
 class AboutUs extends StatefulWidget {
   const AboutUs({Key? key}) : super(key: key);
 
@@ -16,14 +17,21 @@ class _AboutUsState extends State<AboutUs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-
-      AppBar(title: const Text ("من نحن",style: TextStyle(fontSize:22),
-      ),
-       actions: [Padding(
-         padding: const EdgeInsets.only(left: 15.0),
-           child: IconButton(icon: const Icon(CupertinoIcons.arrow_left), onPressed: () { Navigator.pop(context); },)
-       )],
+      appBar: AppBar(
+        title: const Text(
+          "من نحن",
+          style: TextStyle(fontSize: 22),
+        ),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: IconButton(
+                icon: const Icon(CupertinoIcons.arrow_left),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ))
+        ],
         leading: const SizedBox(),
         backgroundColor: Constants.darkBlue,
       ),
@@ -36,31 +44,31 @@ class _AboutUsState extends State<AboutUs> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  const Settings(),
+                        builder: (context) => const Settings(),
                       ),
                     );
                   },
                   child: Image.asset("images/Settings.png")),
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  const Saved(),
+                        builder: (context) => const SavedScreen(),
                       ),
                     );
                   },
                   child: Image.asset("images/Bookmark.png")),
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  const Home(),
+                        builder: (context) => const Home(),
                       ),
                     );
                   },
@@ -73,16 +81,22 @@ class _AboutUsState extends State<AboutUs> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-             SizedBox(height: 34,),
-          Padding(
-            padding: EdgeInsets.only(right:22,left: 23),
-            child: Text("تطبيق حاوِر هو أداة تهدف الى تحقيق التواصل بين متحدثي لغة الاشارة والاخرين من الاشخاص الغير متحدثين بها عن طريق استخدام تقنية التعرف على اشارات اليد وتحوليها الى نصوص مقروءة او مسموعة لتسهل عملية التواصل مع متحدثي لغة الاشارة وايضا توفير هائل للوقت المُستهلك والمجهود في عملية التواصل"
-                ,style: TextStyle(fontSize: 16),),
-          ),
-
-        ],),
+            SizedBox(
+                // height: 7,
+                ),
+            Padding(
+              padding: EdgeInsets.only(
+                  // left: 4,
+                  // right: 4,
+                  ),
+              child: Text(
+                "تطبيق حاوِر هو أداة تهدف الى تحقيق التواصل بين متحدثي لغة الاشارة والاخرين من الاشخاص الغير متحدثين بها عن طريق استخدام تقنية التعرف على اشارات اليد وتحوليها الى نصوص مقروءة او مسموعة لتسهل عملية التواصل مع متحدثي لغة الاشارة وايضا توفير هائل للوقت المُستهلك والمجهود في عملية التواصل",
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          ],
+        ),
       ),
-
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/Saved_Items/saved.dart';
+import 'package:hawer_app/app/Saved_Items/saved_page.dart';
 import 'package:hawer_app/app/home_pages/record_pages/result_screen.dart';
 import 'package:hawer_app/app/home_pages/upload_pages/upload_camera.dart';
 import 'package:hawer_app/app/home_pages/upload_pages/upload_from_gallery.dart';
@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
         },
         children: const [
           Settings(),
-          Saved(),
+          SavedScreen(),
           MainPage(),
         ],
       ),

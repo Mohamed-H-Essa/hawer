@@ -3,20 +3,24 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
-import 'package:hawer_app/app/home_pages/record_pages/v2_video.dart';
+import 'package:hawer_app/app/home_pages/record_pages/video_player_widget.dart';
 import 'package:hawer_app/core/constants.dart';
 import 'package:hawer_app/core/save_relative_path.dart';
+import 'package:hawer_app/core/sql/sql_helper.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ResultVideoScreen extends StatefulWidget {
   const ResultVideoScreen({
     super.key,
     required this.videoPath,
     required this.resultMessage,
+    this.fromSaved = false,
   });
 
   final String videoPath;
   final String resultMessage;
+  final bool fromSaved;
 
   @override
   _ResultVideoScreenState createState() => _ResultVideoScreenState();
@@ -30,13 +34,14 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
     super.initState();
 
     // Show the alert dialog after a delay when the screen is loaded
-    //todo
-    Future.delayed(
-        Duration(
-          seconds: 5,
-        ), () {
-      _showAlertDialog(context, 'This is an alert!');
-    });
+    widget.fromSaved
+        ? null
+        : Future.delayed(
+            Duration(
+              seconds: 5,
+            ), () {
+            _showAlertDialog(context, 'This is an alert!');
+          });
   }
 
   @override
@@ -70,8 +75,9 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
                 // child: VideoDisplayWidget(
                 //   videoPath: widget.videoPath,
                 // ),
-                child: VideoWidget(
+                child: VideoPlayerWidget(
                   videoPath: widget.videoPath,
+                  isBytes: widget.fromSaved,
                 ),
               ),
               // todo beautiful container to display the below text with rounded edges and the proper font etc
@@ -97,90 +103,73 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
 
               Padding(
                 padding: const EdgeInsets.only(left: 30.0, right: 30),
-                child: MaterialButton(
-                  onPressed: () async {
-                    ScaffoldMessenger.of(context).clearSnackBars();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content:
-                            Text(isSaved ? 'تم الحفظ بالفعل' : 'جاري الحفظ'),
-                        duration: Duration(seconds: 2),
+                child: widget.fromSaved
+                    ? SizedBox()
+                    : MaterialButton(
+                        onPressed: widget.resultMessage.isEmpty
+                            ? null
+                            : () async {
+                                if (widget.resultMessage.isEmpty) {
+                                  ScaffoldMessenger.of(context)
+                                      .clearSnackBars();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('لا يوجد نتيجة'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                  return;
+                                }
+
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(isSaved
+                                        ? 'تم الحفظ بالفعل'
+                                        : 'جاري الحفظ'),
+                                    duration: const Duration(seconds: 2),
+                                  ),
+                                );
+
+                                if (isSaved) return;
+                                File(widget.videoPath)
+                                    .readAsBytes()
+                                    .then((value) => {
+                                          saveVideoToDB(
+                                                  widget.resultMessage, value)
+                                              .then((value) {
+                                            isSaved = true;
+                                            ScaffoldMessenger.of(context)
+                                                .clearSnackBars();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text('تم الحفظ'),
+                                                duration: Duration(seconds: 2),
+                                              ),
+                                            );
+                                          })
+                                        });
+                              },
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(60),
+                            side: BorderSide.none),
+                        color: Constants.darkBlue,
+                        height: 60,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            widget.resultMessage.isEmpty
+                                ? Text('لا يوجد نتيجه')
+                                : Text(
+                                    "حفظ",
+                                    style: TextStyle(
+                                        fontSize: 17.28, color: Colors.white),
+                                  ),
+                          ],
+                        ),
                       ),
-                    );
-
-                    Directory? directory = await getExternalStorageDirectory();
-                    if (directory == null) {
-                      print("d is null");
-                      return;
-                    }
-                    List<String> ns = directory.path.split('/');
-                    //make a loop to get the path before the word 'Android'
-
-                    String newPath = "";
-                    for (int i = 0; i < ns.length - 1; i++) {
-                      if (ns[i] == "Android") {
-                        break;
-                      }
-                      newPath += ns[i] + "/";
-                    }
-                    newPath += 'HAWER';
-                    directory = Directory(newPath);
-                    print(directory.path);
-
-                    File fileDef = File(widget.videoPath);
-                    bool exists = await fileDef.exists();
-                    print(newPath);
-                    // newPath =
-                    //     '$newPath/${DateTime.now().toIso8601String()}.mp4';
-                    // newPath = '$newPath/${0}.mp4';
-
-                    print(newPath);
-                    File newFileDef = File(newPath);
-                    await newFileDef.create(recursive: true);
-                    print("$exists : ${widget.videoPath}");
-
-                    fileDef = await fileDef.copy(newFileDef.path);
-
-                    Uint8List bytes = await fileDef.readAsBytes();
-                    await fileDef.writeAsBytes(bytes);
-
-                    if (isSaved) return;
-                    print(widget.videoPath);
-                    GallerySaver.saveVideo(widget.videoPath)
-                        .then((bool? success) {
-                      setState(() {
-                        if (isSaved) {
-                          return;
-                        } else {
-                          isSaved = true;
-
-                          if (success == null || !success) {
-                            showCenterSnackBar(context, "حدث خطاء!!");
-                          } else {
-                            showCenterSnackBar(context, "تم حفظ الفيديو بنجاح");
-                            saveRelativePath(widget.videoPath);
-                          }
-                          //_showSavedSuccessfully_dialog(context);
-                        }
-                      });
-                    });
-                  },
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(60),
-                      side: BorderSide.none),
-                  color: Constants.darkBlue,
-                  height: 60,
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      (Text(
-                        "حفظ",
-                        style: TextStyle(fontSize: 17.28, color: Colors.white),
-                      )),
-                    ],
-                  ),
-                ),
               ),
             ],
           ),

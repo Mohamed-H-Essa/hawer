@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/Saved_Items/saved.dart';
+import 'package:hawer_app/app/Saved_Items/saved_page.dart';
 import '../../core/constants.dart';
+
 class Saved2 extends StatefulWidget {
   const Saved2({Key? key}) : super(key: key);
   @override
@@ -14,39 +15,47 @@ class _Saved2State extends State<Saved2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-      AppBar(title: const Text ("المحدد",style: TextStyle(fontSize: 22),),
+      appBar: AppBar(
+        title: const Text(
+          "المحدد",
+          style: TextStyle(fontSize: 22),
+        ),
         centerTitle: true,
         backgroundColor: Constants.darkBlue,
         leading: const Icon(CupertinoIcons.xmark),
         actions: [
           Padding(
-          padding: const EdgeInsets.only(left:15.0),
-          child: IconButton(icon: const Icon(CupertinoIcons.arrow_left), onPressed: () { Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>  const Saved(),
-            ),
-          ); },)
-
-        )],
+              padding: const EdgeInsets.only(left: 15.0),
+              child: IconButton(
+                icon: const Icon(CupertinoIcons.arrow_left),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SavedScreen(),
+                    ),
+                  );
+                },
+              ))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 37),
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: ListView(
-            children:[
+            children: [
               GestureDetector(
-                  onLongPress: (){
+                  onLongPress: () {
                     setState(() {
                       //_showCheckboxes=true;
                     });
                   },
-
-                  child: buildListTile("images/image.png","List item","Supporting line text lorem...")),
+                  child: buildListTile("images/image.png", "List item",
+                      "Supporting line text lorem...")),
               const SizedBox(height: 21),
-              buildListTile("images/image.png", "List item", "Supporting line text lorem..." ),
+              buildListTile("images/image.png", "List item",
+                  "Supporting line text lorem..."),
             ],
           ),
         ),
@@ -60,25 +69,26 @@ class _Saved2State extends State<Saved2> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                  onTap: (){},
-                  child: Image.asset("images/Delete.png")),
+                  onTap: () {}, child: Image.asset("images/Delete.png")),
               GestureDetector(
-                  onTap: (){},
-                  child: Image.asset("images/Edit.png")),
+                  onTap: () {}, child: Image.asset("images/Edit.png")),
             ],
           ),
         ),
       ),
-
     );
   }
-  ListTile buildListTile(image,title,subtitle) {
+
+  ListTile buildListTile(image, title, subtitle) {
     return ListTile(
-        title: Text(title,
+        title: Text(
+          title,
           //textDirection: TextDirection.ltr,
-          style: const TextStyle(color: Colors.black,fontSize: 20),
+          style: const TextStyle(color: Colors.black, fontSize: 20),
         ),
-        subtitle: Text(subtitle,style: const TextStyle(fontSize: 14),
+        subtitle: Text(
+          subtitle,
+          style: const TextStyle(fontSize: 14),
         ),
         leading: Image.asset(image),
         // trailing: _showCheckboxes?Checkbox(value: _throwShotAway,
@@ -90,10 +100,6 @@ class _Saved2State extends State<Saved2> {
         // ):Container(),
         focusColor: Colors.grey,
         hoverColor: Colors.grey,
-        onTap: () {}
-    );
+        onTap: () {});
   }
-
 }
-
-

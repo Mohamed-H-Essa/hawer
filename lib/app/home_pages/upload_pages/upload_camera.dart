@@ -26,7 +26,7 @@ class _UploadUsingCameraState extends State<UploadUsingCamera> {
 
     _cameraController = CameraController(
       firstCamera,
-      ResolutionPreset.ultraHigh,
+      ResolutionPreset.low,
     );
 
     _initializeControllerFuture = _cameraController?.initialize();
