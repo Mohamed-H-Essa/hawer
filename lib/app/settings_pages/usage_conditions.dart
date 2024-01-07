@@ -18,6 +18,7 @@ class _UsageConditionsState extends State<UsageConditions> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 0,
         title: const Text(
           "شروط الاستخدام",
           style: TextStyle(fontSize: 22),
@@ -35,58 +36,17 @@ class _UsageConditionsState extends State<UsageConditions> {
         leading: const SizedBox(),
         backgroundColor: Constants.darkBlue,
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 60,
-          width: 90,
-          color: Constants.darkBlue,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Settings(),
-                      ),
-                    );
-                  },
-                  child: Image.asset("images/Settings.png")),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SavedScreen(),
-                      ),
-                    );
-                  },
-                  child: Image.asset("images/Bookmark.png")),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Home(),
-                      ),
-                    );
-                  },
-                  child: Image.asset("images/Home.png")),
-            ],
-          ),
-        ),
-      ),
       body: const Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 34,
-              ),
+              SizedBox(),
               Padding(
-                padding: EdgeInsets.only(right: 22, left: 23),
+                padding: EdgeInsets.only(
+                  right: 4,
+                  left: 4,
+                ),
                 child: Column(
                   children: [
                     Text(

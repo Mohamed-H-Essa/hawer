@@ -48,6 +48,21 @@ class SavedItem {
   String toString() {
     return 'Saved{id: $id, word: $word, videoPath: $videoPath, date: $date}';
   }
+  //copywith
+
+  SavedItem copyWith({
+    int? id,
+    String? word,
+    String? videoPath,
+    String? date,
+  }) {
+    return SavedItem(
+      id: id ?? this.id,
+      word: word ?? this.word,
+      videoPath: videoPath ?? this.videoPath,
+      date: date ?? this.date,
+    );
+  }
 }
 
 class SavedProvider {
@@ -162,4 +177,22 @@ Future<List<SavedItem>> getSavedVideos() async {
   List<SavedItem> savedItems = await savedProvider.getSaved();
   await savedProvider.close();
   return savedItems;
+}
+
+// delete item from database and delete video from application documents directory
+Future<void> deleteSavedItem(SavedItem savedItem) async {
+  SavedProvider savedProvider = SavedProvider();
+  await savedProvider.open();
+  await savedProvider.delete(savedItem.id!);
+  await savedProvider.close();
+  File file = File(savedItem.videoPath);
+  await file.delete();
+}
+
+// update item in database
+Future<void> updateSavedItem(SavedItem savedItem) async {
+  SavedProvider savedProvider = SavedProvider();
+  await savedProvider.open();
+  await savedProvider.update(savedItem);
+  await savedProvider.close();
 }

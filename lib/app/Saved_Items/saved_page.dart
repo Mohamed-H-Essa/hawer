@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hawer_app/app/Saved_Items/saved_selected_mode.dart';
 import 'package:hawer_app/app/home_pages/record_pages/result_video_screen.dart';
 import 'package:hawer_app/app/home_pages/record_pages/video_player_widget.dart';
 import 'package:path_provider/path_provider.dart';
@@ -16,11 +17,8 @@ class SavedScreen extends StatefulWidget {
 }
 
 class _SavedScreenState extends State<SavedScreen> {
-  // bool _showCheckboxes = true;
   bool loading = true;
   String dirPath = '';
-  List<SavedItem>? savedList;
-  // bool _throwShotAway=true;
   @override
   void initState() {
     super.initState();
@@ -56,10 +54,12 @@ class _SavedScreenState extends State<SavedScreen> {
     });
   }
 
+  List<SavedItem>? savedList;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 0,
         title: const Text(
           "المحفوظ",
           style: TextStyle(fontSize: 22),
@@ -68,7 +68,7 @@ class _SavedScreenState extends State<SavedScreen> {
         backgroundColor: Constants.darkBlue,
       ),
       body: loading || savedList == null
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : savedList!.isEmpty
               ? const Center(
                   child: Text(
@@ -89,12 +89,13 @@ class _SavedScreenState extends State<SavedScreen> {
                         // convert date to human readable format
                         date = date.split('.')[0].replaceAll('T', ' ');
 
-                        return GestureDetector(
-                          onLongPress: () {
-                            setState(() {});
-                          },
-                          child: buildListTile("images/image.png", word, date,
-                              savedList![index].videoPath),
+                        return buildListTile(
+                          "images/image.png",
+                          word,
+                          date,
+                          savedList![index].videoPath,
+                          index,
+                          savedList![index],
                         );
                       },
                     ),
@@ -103,12 +104,30 @@ class _SavedScreenState extends State<SavedScreen> {
     );
   }
 
-  ListTile buildListTile(image, title, subtitle, path) {
+  ListTile buildListTile(image, title, subtitle, path, index, SavedItem item) {
     return ListTile(
+        onLongPress: () async {
+          await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => SavedSelectedModeScreen(initIndex: index),
+            ),
+          );
+          setState(() {
+            loading = true;
+          });
+
+          getSavedVideos().then((value) {
+            savedList = value;
+            // SavedList.of(context)!.savedItems = value;
+            setState(() {
+              loading = false;
+            });
+          });
+        },
         title: Text(
           title,
           //textDirection: TextDirection.ltr,
-          style: const TextStyle(color: Colors.black, fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
         subtitle: Text(
           subtitle,
@@ -124,11 +143,13 @@ class _SavedScreenState extends State<SavedScreen> {
         // ):Container(),
         focusColor: Colors.grey,
         hoverColor: Colors.grey,
+        splashColor: Color.fromARGB(255, 179, 182, 255),
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => ResultVideoScreen(
+                item: item,
                 videoPath: path,
                 resultMessage: title,
                 fromSaved: true,

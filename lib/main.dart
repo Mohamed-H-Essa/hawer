@@ -31,14 +31,15 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xffE5EBFC),
         primarySwatch: Colors.blue,
       ),
-      // home: UserState(),
       home: AnimatedSplashScreen(
+        backgroundColor: const Color(0xFFE5EBFC),
         splash: Text(
           "حاوِر",
           style: TextStyle(
-              color: Constants.darkBlue,
-              fontSize: 60,
-              fontWeight: FontWeight.bold),
+            color: Constants.darkBlue,
+            fontSize: 60,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         splashIconSize: 100,
         duration: 900,
