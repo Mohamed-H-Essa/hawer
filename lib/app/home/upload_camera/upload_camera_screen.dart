@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:hawer_app/app/home/upload_camera/result_screen.dart';
+import 'package:hawer_app/app/home/result/result_screen.dart';
 import 'package:hawer_app/app/home/widgets/recording_container.dart';
 import 'package:hawer_app/core/constants.dart';
 import 'package:path_provider/path_provider.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/saved/saved_page.dart';
-import 'package:hawer_app/app/info/settings.dart';
+import 'package:hawer_app/app/saved/view/saved_page.dart';
+import 'package:hawer_app/app/info/info_screen.dart';
 import '../core/constants.dart';
 import 'home/home.dart';
 

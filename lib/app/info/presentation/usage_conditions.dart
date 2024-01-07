@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../core/constants.dart';
+import '../../../core/constants.dart';
 
 class UsageConditions extends StatefulWidget {
   const UsageConditions({Key? key}) : super(key: key);

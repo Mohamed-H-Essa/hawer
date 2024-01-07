@@ -2,7 +2,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hawer_app/core/constants.dart';
-import 'app/home_pages/home.dart';
+import 'app/home/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

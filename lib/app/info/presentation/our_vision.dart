@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../core/constants.dart';
+import '../../../core/constants.dart';
 
 class OurVision extends StatefulWidget {
   const OurVision({Key? key}) : super(key: key);

@@ -1,20 +1,20 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/home_pages/record_pages/result_screen.dart';
+import 'package:hawer_app/app/home/result/result_screen.dart';
 import 'package:hawer_app/core/constants.dart';
-import 'package:hawer_app/core/upload_video_method.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player/video_player.dart';
 
-class UploadFromGallery extends StatefulWidget {
-  const UploadFromGallery({super.key});
+class UploadUsingGalleryScreen extends StatefulWidget {
+  const UploadUsingGalleryScreen({super.key});
 
   @override
-  _UploadFromGalleryState createState() => _UploadFromGalleryState();
+  _UploadUsingGalleryScreenState createState() =>
+      _UploadUsingGalleryScreenState();
 }
 
-class _UploadFromGalleryState extends State<UploadFromGallery> {
+class _UploadUsingGalleryScreenState extends State<UploadUsingGalleryScreen> {
   File? _selectedVideo;
   VideoPlayerController? _videoController;
 

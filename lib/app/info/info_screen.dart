@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/info/about_us.dart';
-import 'package:hawer_app/app/info/contact_us.dart';
-import 'package:hawer_app/app/info/our_vision.dart';
-import 'package:hawer_app/app/info/usage_conditions.dart';
+import 'package:hawer_app/app/info/presentation/about_us.dart';
+import 'package:hawer_app/app/info/presentation/contact_us.dart';
+import 'package:hawer_app/app/info/presentation/our_vision.dart';
+import 'package:hawer_app/app/info/presentation/usage_conditions.dart';
 import '../../core/constants.dart';
 
 class InfoScreen extends StatefulWidget {

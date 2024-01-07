@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hawer_app/app/saved/view/saved_selected_mode.dart';
 import 'package:hawer_app/app/home/result/result_success_video_screen.dart';
-import 'package:hawer_app/app/home/upload_camera/video_player_widget.dart';
+import 'package:hawer_app/core/view/widgets/video_player_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/constants.dart';

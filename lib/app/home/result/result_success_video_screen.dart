@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:hawer_app/app/home/upload_camera/video_player_widget.dart';
+import 'package:hawer_app/core/view/widgets/video_player_widget.dart';
 import 'package:hawer_app/core/constants.dart';
 import 'package:hawer_app/core/sql/sql_helper.dart';
 
