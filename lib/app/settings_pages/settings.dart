@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/Saved_Items/saved_page.dart';
-import 'package:hawer_app/app/settings_pages/aboutUs.dart';
+import 'package:hawer_app/app/settings_pages/about_us.dart';
 import 'package:hawer_app/app/settings_pages/contact_us.dart';
 import 'package:hawer_app/app/settings_pages/our_vision.dart';
 import 'package:hawer_app/app/settings_pages/usage_conditions.dart';
 import '../../core/constants.dart';
-import '../home_pages/home.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -28,40 +26,6 @@ class _SettingsState extends State<Settings> {
         backgroundColor: Constants.darkBlue,
         leading: const SizedBox(),
       ),
-      // bottomNavigationBar: BottomAppBar(
-      //   child: Container(
-      //     height: 60,
-      //     width: 90,
-      //     color: Constants.darkBlue,
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //       children: [
-      //         GestureDetector(
-      //             onTap: () {}, child: Image.asset("images/Settings.png")),
-      //         GestureDetector(
-      //             onTap: () {
-      //               Navigator.pushReplacement(
-      //                 context,
-      //                 MaterialPageRoute(
-      //                   builder: (context) => const Saved(),
-      //                 ),
-      //               );
-      //             },
-      //             child: Image.asset("images/Bookmark.png")),
-      //         GestureDetector(
-      //             onTap: () {
-      //               Navigator.pushReplacement(
-      //                 context,
-      //                 MaterialPageRoute(
-      //                   builder: (context) => const Home(),
-      //                 ),
-      //               );
-      //             },
-      //             child: Image.asset("images/Home.png")),
-      //       ],
-      //     ),
-      //   ),
-      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

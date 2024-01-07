@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hawer_app/app/home_pages/record_pages/result_video_screen.dart';
 import 'package:hawer_app/app/home_pages/record_pages/video_player_widget.dart';
@@ -31,8 +29,6 @@ class _SavedSelectedModeScreenState extends State<SavedSelectedModeScreen> {
   @override
   void initState() {
     super.initState();
-
-    print('naved to selected mode');
     selectedIndexes = [widget.initIndex];
     getSavedVideos().then((value) {
       savedList = value;
@@ -56,14 +52,12 @@ class _SavedSelectedModeScreenState extends State<SavedSelectedModeScreen> {
 
     setState(() {
       dirPath = '${extDir.path}/$videoPath';
-      print(videoPath!.split('/')[1]);
-      if (videoPath == null || videoPath.isEmpty) {
+      if (videoPath!.isEmpty) {
         loading = true;
         return;
       }
-      print(dirPath);
       loading = false;
-      print('loading donee');
+      print('loading done');
     });
   }
 
@@ -79,7 +73,7 @@ class _SavedSelectedModeScreenState extends State<SavedSelectedModeScreen> {
           style: TextStyle(fontSize: 22),
         ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.close,
           ),
           onPressed: () {
@@ -201,7 +195,7 @@ class _SavedSelectedModeScreenState extends State<SavedSelectedModeScreen> {
   ListTile buildListTile(image, title, subtitle, path, bool selected, index) {
     return ListTile(
       selected: selected,
-      selectedTileColor: Color.fromARGB(255, 224, 224, 224),
+      selectedTileColor: const Color.fromARGB(255, 224, 224, 224),
       title: Text(
         title,
         //textDirection: TextDirection.ltr,
@@ -223,25 +217,21 @@ class _SavedSelectedModeScreenState extends State<SavedSelectedModeScreen> {
       hoverColor: Colors.grey,
       onTap: () {
         setState(() {
-          print(selectedIndexes);
           if (selectedIndexes.contains(index)) {
             selectedIndexes.remove(index);
           } else {
             selectedIndexes.add(index);
           }
-          print(selectedIndexes);
         });
       },
 
       onLongPress: () {
         setState(() {
-          print(selectedIndexes);
           if (selectedIndexes.contains(index)) {
             selectedIndexes.remove(index);
           } else {
             selectedIndexes.add(index);
           }
-          print(selectedIndexes);
         });
       },
     );
@@ -258,7 +248,7 @@ class ImagePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 90,
       width: 120,
       child: VideoPlayerWidget(

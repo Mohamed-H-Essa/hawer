@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hawer_app/app/Saved_Items/saved_selected_mode.dart';
 import 'package:hawer_app/app/home_pages/record_pages/result_video_screen.dart';
@@ -28,29 +26,20 @@ class _SavedScreenState extends State<SavedScreen> {
         loading = false;
       });
     });
-    // loadPathVideo();
   }
 
   Future<void> loadPathVideo() async {
     loading = true;
-    print('loading...');
     final Directory extDir = await getApplicationDocumentsDirectory();
-
-    //get videoPath from shared preferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     String? videoPath = prefs.getString('videoPath');
-
     setState(() {
       dirPath = '${extDir.path}/$videoPath';
-      print(videoPath!.split('/')[1]);
       if (videoPath == null || videoPath.isEmpty) {
         loading = true;
         return;
       }
-      print(dirPath);
       loading = false;
-      print('loading donee');
     });
   }
 
@@ -85,10 +74,7 @@ class _SavedScreenState extends State<SavedScreen> {
                       itemBuilder: (context, index) {
                         String word = savedList![index].word;
                         String date = savedList![index].date;
-
-                        // convert date to human readable format
                         date = date.split('.')[0].replaceAll('T', ' ');
-
                         return buildListTile(
                           "images/image.png",
                           word,
@@ -118,7 +104,6 @@ class _SavedScreenState extends State<SavedScreen> {
 
           getSavedVideos().then((value) {
             savedList = value;
-            // SavedList.of(context)!.savedItems = value;
             setState(() {
               loading = false;
             });
@@ -126,7 +111,6 @@ class _SavedScreenState extends State<SavedScreen> {
         },
         title: Text(
           title,
-          //textDirection: TextDirection.ltr,
           style: const TextStyle(fontSize: 20),
         ),
         subtitle: Text(
@@ -134,16 +118,9 @@ class _SavedScreenState extends State<SavedScreen> {
           style: const TextStyle(fontSize: 14),
         ),
         leading: ImagePreview(dirPath: path),
-        // trailing: _showCheckboxes?Checkbox(value: _throwShotAway,
-        //   onChanged: (bool? newValue) {
-        //     setState(() {
-        //       _throwShotAway = newValue!;
-        //     });
-        //   },
-        // ):Container(),
         focusColor: Colors.grey,
         hoverColor: Colors.grey,
-        splashColor: Color.fromARGB(255, 179, 182, 255),
+        splashColor: const Color.fromARGB(255, 179, 182, 255),
         onTap: () {
           Navigator.push(
             context,
@@ -170,7 +147,7 @@ class ImagePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 90,
       width: 120,
       child: VideoPlayerWidget(

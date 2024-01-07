@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/settings_pages/settings.dart';
-
 import '../../core/constants.dart';
-import '../Saved_Items/saved_page.dart';
-import '../home_pages/home.dart';
 
 class ContactUs extends StatefulWidget {
   const ContactUs({Key? key}) : super(key: key);

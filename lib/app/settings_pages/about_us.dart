@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/settings_pages/settings.dart';
-
 import '../../core/constants.dart';
-import '../Saved_Items/saved_page.dart';
-import '../home_pages/home.dart';
 
 class AboutUs extends StatefulWidget {
   const AboutUs({Key? key}) : super(key: key);
@@ -37,48 +33,6 @@ class _AboutUsState extends State<AboutUs> {
         leading: const SizedBox(),
         backgroundColor: Constants.darkBlue,
       ),
-      // bottomNavigationBar: BottomAppBar(
-      //   child: Container(
-      //     height: 60,
-      //     width: 90,
-      //     color: Constants.darkBlue,
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //       children: [
-      //         GestureDetector(
-      //             onTap: () {
-      //               Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(
-      //                   builder: (context) => const Settings(),
-      //                 ),
-      //               );
-      //             },
-      //             child: Image.asset("images/Settings.png")),
-      //         GestureDetector(
-      //             onTap: () {
-      //               Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(
-      //                   builder: (context) => const SavedScreen(),
-      //                 ),
-      //               );
-      //             },
-      //             child: Image.asset("images/Bookmark.png")),
-      //         GestureDetector(
-      //             onTap: () {
-      //               Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(
-      //                   builder: (context) => const Home(),
-      //                 ),
-      //               );
-      //             },
-      //             child: Image.asset("images/Home.png")),
-      //       ],
-      //     ),
-      //   ),
-      // ),
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
