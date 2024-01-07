@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
@@ -27,17 +25,12 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   Future<void> initFromBytes() async {
     String? videoPath = widget.videoPath;
-    print('videoPath from by bytes: $videoPath ');
-    if (videoPath == null || videoPath.isEmpty) {
-      print('video path is null');
+    if (videoPath.isEmpty) {
       return;
     }
 
-    print("videopath from video player $videoPath ");
-
     File fileDef = File(videoPath);
     fileDef.readAsBytes().then((value) {
-      Uint8List bytes = value;
       _controller = VideoPlayerController.file(File(videoPath))
         ..initialize().then((_) {
           setState(() {
@@ -50,8 +43,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   @override
   void initState() {
     super.initState();
-    // _controller = VideoPlayerController.networkUrl(Uri.parse(
-    //     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
 
     bool videoExists = false;
 
@@ -63,7 +54,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       });
 
       if (widget.videoPath.isEmpty || !videoExists) {
-        print('video doesn\'t exist');
       } else {}
 
       _controller = VideoPlayerController.file(File(widget.videoPath))
@@ -72,7 +62,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             loading = false;
           });
         });
-      // take a screenshot from the video and save it to local storage
     }
   }
 

@@ -31,7 +31,7 @@ class ErrorPage extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('العوده'),
+              child: const Text('العوده'),
             ),
           ],
         ),

@@ -15,7 +15,7 @@ class _RecordingContainerState extends State<RecordingContainer>
 
     _dotController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
     )..repeat(reverse: true);
   }
 
@@ -30,7 +30,7 @@ class _RecordingContainerState extends State<RecordingContainer>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             'Recording',
             style: TextStyle(
               color: Colors.red,
@@ -38,7 +38,7 @@ class _RecordingContainerState extends State<RecordingContainer>
               fontSize: 18,
             ),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           _buildPulsingDot(),
         ],
       ),
@@ -51,7 +51,7 @@ class _RecordingContainerState extends State<RecordingContainer>
       child: Container(
         width: 12,
         height: 12,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.red,
         ),

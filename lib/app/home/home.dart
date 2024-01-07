@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/Saved_Items/saved_page.dart';
-import 'package:hawer_app/app/home_pages/record_pages/result_screen.dart';
-import 'package:hawer_app/app/home_pages/upload_pages/upload_camera.dart';
-import 'package:hawer_app/app/home_pages/upload_pages/upload_from_gallery.dart';
-import 'package:hawer_app/app/settings_pages/settings.dart';
+import 'package:hawer_app/app/saved/saved_page.dart';
+import 'package:hawer_app/app/home/record_pages/result_screen.dart';
+import 'package:hawer_app/app/home/upload_pages/upload_camera.dart';
+import 'package:hawer_app/app/home/upload_pages/upload_from_gallery.dart';
+import 'package:hawer_app/app/info/settings.dart';
 import 'package:hawer_app/core/transition_animation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
           setState(() {});
         },
         children: const [
-          Settings(),
+          InfoScreen(),
           SavedScreen(),
           MainPage(),
         ],

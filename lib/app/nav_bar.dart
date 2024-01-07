@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/Saved_Items/saved_page.dart';
-import 'package:hawer_app/app/settings_pages/settings.dart';
+import 'package:hawer_app/app/saved/saved_page.dart';
+import 'package:hawer_app/app/info/settings.dart';
 import '../core/constants.dart';
-import 'home_pages/home.dart';
+import 'home/home.dart';
 
-class Nav extends StatefulWidget {
-  const Nav({Key? key}) : super(key: key);
+class NavScreen extends StatefulWidget {
+  const NavScreen({Key? key}) : super(key: key);
   @override
-  State<Nav> createState() => _NavState();
+  State<NavScreen> createState() => _NavScreenState();
 }
 
-class _NavState extends State<Nav> {
+class _NavScreenState extends State<NavScreen> {
   int currentIndex = 2;
 
   void onTap(int index) {
@@ -20,7 +20,7 @@ class _NavState extends State<Nav> {
   }
 
   late List pages = [
-    const Settings(),
+    const InfoScreen(),
     const SavedScreen(),
     const Home(),
   ];

@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/settings_pages/about_us.dart';
-import 'package:hawer_app/app/settings_pages/contact_us.dart';
-import 'package:hawer_app/app/settings_pages/our_vision.dart';
-import 'package:hawer_app/app/settings_pages/usage_conditions.dart';
+import 'package:hawer_app/app/info/about_us.dart';
+import 'package:hawer_app/app/info/contact_us.dart';
+import 'package:hawer_app/app/info/our_vision.dart';
+import 'package:hawer_app/app/info/usage_conditions.dart';
 import '../../core/constants.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
+class InfoScreen extends StatefulWidget {
+  const InfoScreen({Key? key}) : super(key: key);
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<InfoScreen> createState() => _InfoScreenState();
 }
 
-class _SettingsState extends State<Settings> {
+class _InfoScreenState extends State<InfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

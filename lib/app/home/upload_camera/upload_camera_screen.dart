@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:hawer_app/app/home_pages/record_pages/result_screen.dart';
-import 'package:hawer_app/app/home_pages/upload_pages/recording_container.dart';
+import 'package:hawer_app/app/home/upload_camera/result_screen.dart';
+import 'package:hawer_app/app/home/widgets/recording_container.dart';
 import 'package:hawer_app/core/constants.dart';
 import 'package:path_provider/path_provider.dart';
 
 class UploadUsingCamera extends StatefulWidget {
+  const UploadUsingCamera({super.key});
+
   @override
   _UploadUsingCameraState createState() => _UploadUsingCameraState();
 }

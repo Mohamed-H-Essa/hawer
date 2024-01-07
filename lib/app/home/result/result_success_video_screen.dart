@@ -1,18 +1,12 @@
 import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:gallery_saver/gallery_saver.dart';
-import 'package:hawer_app/app/home_pages/record_pages/video_player_widget.dart';
+import 'package:hawer_app/app/home/upload_camera/video_player_widget.dart';
 import 'package:hawer_app/core/constants.dart';
-import 'package:hawer_app/core/save_relative_path.dart';
 import 'package:hawer_app/core/sql/sql_helper.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class ResultVideoScreen extends StatefulWidget {
-  ResultVideoScreen({
+class ResultSuccessVideoScreen extends StatefulWidget {
+  ResultSuccessVideoScreen({
     super.key,
     required this.videoPath,
     required this.resultMessage,
@@ -36,10 +30,12 @@ class ResultVideoScreen extends StatefulWidget {
   final bool feedback;
 
   @override
-  _ResultVideoScreenState createState() => _ResultVideoScreenState();
+  // ignore: library_private_types_in_public_api
+  _ResultSuccessVideoScreenState createState() =>
+      _ResultSuccessVideoScreenState();
 }
 
-class _ResultVideoScreenState extends State<ResultVideoScreen> {
+class _ResultSuccessVideoScreenState extends State<ResultSuccessVideoScreen> {
   bool isSaved = false;
   String snackMessage = "";
   String newMessage = '';
@@ -52,7 +48,7 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
     widget.fromSaved || widget.edit
         ? null
         : Future.delayed(
-            Duration(
+            const Duration(
               seconds: 5,
             ), () {
             _showAlertDialog(context, 'This is an alert!');
@@ -88,7 +84,7 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
                   width: double.infinity,
                   // height: 200,
                   height: 540,
-                  padding: EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 20),
                   // child: VideoDisplayWidget(
                   //   videoPath: widget.videoPath,
                   // ),
@@ -102,21 +98,21 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
                         onPressed: () {
                           flutterTts.speak(widget.resultMessage);
                         },
-                        child: Text('شغل'))
-                    : SizedBox(),
-                SizedBox(
+                        child: const Text('شغل'))
+                    : const SizedBox(),
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
-                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.all(16),
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 189, 225, 255),
+                    color: const Color.fromARGB(255, 189, 225, 255),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: widget.edit
                       ? TextField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: 'اكتب هنا',
                             hintStyle: TextStyle(
@@ -126,7 +122,7 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
                             ),
                           ),
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -140,7 +136,7 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
                       : Text(
                           widget.resultMessage,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -148,13 +144,13 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
                           textAlign: TextAlign.center,
                         ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
                     padding: const EdgeInsets.only(left: 30.0, right: 30),
                     child: widget.fromSaved || widget.edit
-                        ? SizedBox()
+                        ? const SizedBox()
                         : MaterialButton(
                             onPressed: widget.resultMessage.isEmpty
                                 ? null
@@ -215,8 +211,8 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 widget.resultMessage.isEmpty
-                                    ? Text('لا يوجد نتيجه')
-                                    : Text(
+                                    ? const Text('لا يوجد نتيجه')
+                                    : const Text(
                                         "حفظ",
                                         style: TextStyle(
                                             fontSize: 17.28,
@@ -256,8 +252,8 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
                               },
                         child: Text(
                             widget.feedback ? "أرسال للمطور" : "حفظ التغييرات"))
-                    : SizedBox(),
-                SizedBox(
+                    : const SizedBox(),
+                const SizedBox(
                   height: 30,
                 ),
               ],
@@ -305,6 +301,7 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
         // Overlay.of(context).remove(overlayEntry) ;
         overlayEntry.remove();
       } catch (e) {
+        // ignore: avoid_print
         print(e);
       }
     });
@@ -336,7 +333,7 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (_) => ResultVideoScreen(
+                    builder: (_) => ResultSuccessVideoScreen(
                           videoPath: widget.videoPath,
                           resultMessage: widget.resultMessage,
                           edit: true,
@@ -352,41 +349,5 @@ class _ResultVideoScreenState extends State<ResultVideoScreen> {
         );
       },
     );
-
-    // Delay for 5 seconds and then close the dialog
-    // Future.delayed(const Duration(seconds: 5), () {
-    //   Navigator.of(context).pop();
-    // });
-  }
-
-  void _showSavedSuccessfully_dialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          child: Container(
-              decoration: const BoxDecoration(
-                color: Color(0xff07A304),
-                // borderRadius: BorderRadius.circular(16.0),
-              ),
-              width: 500.0, // Adjust the width as needed
-              height: 50.0, // Adjust the height as needed
-              child: const Center(
-                child: Text(
-                  "تم الحفظ بنجاح",
-                  style: TextStyle(fontSize: 14, color: Colors.white),
-                ),
-              )),
-        );
-      },
-    );
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pop();
-    });
   }
 }

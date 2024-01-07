@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:hawer_app/app/Saved_Items/saved_selected_mode.dart';
-import 'package:hawer_app/app/home_pages/record_pages/result_video_screen.dart';
-import 'package:hawer_app/app/home_pages/record_pages/video_player_widget.dart';
+import 'package:hawer_app/app/saved/view/saved_selected_mode.dart';
+import 'package:hawer_app/app/home/result/result_success_video_screen.dart';
+import 'package:hawer_app/app/home/upload_camera/video_player_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../core/constants.dart';
-import '../../core/sql/sql_helper.dart';
+import '../../../core/constants.dart';
+import '../../../core/sql/sql_helper.dart';
 
 class SavedScreen extends StatefulWidget {
   const SavedScreen({Key? key}) : super(key: key);
@@ -125,7 +125,7 @@ class _SavedScreenState extends State<SavedScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ResultVideoScreen(
+              builder: (context) => ResultSuccessVideoScreen(
                 item: item,
                 videoPath: path,
                 resultMessage: title,
