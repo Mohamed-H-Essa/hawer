@@ -53,6 +53,7 @@ class _ResultSuccessVideoScreenState extends State<ResultSuccessVideoScreen> {
             ), () {
             _showAlertDialog(context, 'This is an alert!');
           });
+    flutterTts.setLanguage("ar");
   }
 
   @override

@@ -165,7 +165,7 @@ Future<void> saveVideoToDB(String word, Uint8List videoBytes) async {
   await savedProvider.insert(saved);
 
   // close database
-  await savedProvider.close();
+  // await savedProvider.close();
   print('end save video');
 }
 
@@ -175,7 +175,7 @@ Future<List<SavedItem>> getSavedVideos() async {
   SavedProvider savedProvider = SavedProvider();
   await savedProvider.open();
   List<SavedItem> savedItems = await savedProvider.getSaved();
-  await savedProvider.close();
+  // await savedProvider.close();
   return savedItems;
 }
 
@@ -184,7 +184,7 @@ Future<void> deleteSavedItem(SavedItem savedItem) async {
   SavedProvider savedProvider = SavedProvider();
   await savedProvider.open();
   await savedProvider.delete(savedItem.id!);
-  await savedProvider.close();
+  // await savedProvider.close();
   File file = File(savedItem.videoPath);
   await file.delete();
 }
@@ -194,5 +194,5 @@ Future<void> updateSavedItem(SavedItem savedItem) async {
   SavedProvider savedProvider = SavedProvider();
   await savedProvider.open();
   await savedProvider.update(savedItem);
-  await savedProvider.close();
+  // await savedProvider.close();
 }

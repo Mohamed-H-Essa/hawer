@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hawer_app/app/home/result/result_screen.dart';
 import 'package:hawer_app/core/constants.dart';
+import 'package:hawer_app/core/data.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player/video_player.dart';
@@ -204,6 +205,7 @@ class _UploadUsingGalleryScreenState extends State<UploadUsingGalleryScreen> {
         });
     });
 
+    resultText = arabicSentences[0];
     _uploadVideo(_selectedVideo!.path);
     // await uploadVideo(_selectedVideo!);
   }

@@ -3,7 +3,9 @@ import 'package:camera/camera.dart';
 import 'package:hawer_app/app/home/result/result_screen.dart';
 import 'package:hawer_app/app/home/widgets/recording_container.dart';
 import 'package:hawer_app/core/constants.dart';
+import 'package:hawer_app/core/data.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UploadUsingCamera extends StatefulWidget {
   const UploadUsingCamera({super.key});
@@ -21,6 +23,9 @@ class _UploadUsingCameraState extends State<UploadUsingCamera> {
   void initState() {
     _initializeCamera();
     super.initState();
+    wordCounter = 0;
+    sentenceCounter = 0;
+    resultText = '';
   }
 
   Future<void> _initializeCamera() async {
@@ -174,7 +179,95 @@ class _UploadUsingCameraState extends State<UploadUsingCamera> {
                                 ),
                               ),
                             ),
-                          )
+                          ),
+                          Positioned(
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                margin: EdgeInsets.only(bottom: 100),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: GestureDetector(
+                                              child: Container(
+                                                color: Colors.transparent,
+                                              ),
+                                              onTap: () {
+                                                print("Top right");
+                                                if (wordCounter <
+                                                    arabicWords.length) {
+                                                  wordCounter++;
+                                                }
+                                                print(
+                                                    'wordcount: $wordCounter');
+                                                print(
+                                                    'sentencecount:  $sentenceCounter');
+                                              },
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: GestureDetector(
+                                              child: Container(
+                                                color: Colors.transparent,
+                                              ),
+                                              onTap: () {
+                                                print("Top left");
+                                                wordCounter = 0;
+                                                print(
+                                                    'wordcount: $wordCounter');
+                                                print(
+                                                    'sentencecount:  $sentenceCounter');
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: GestureDetector(
+                                              child: Container(
+                                                color: Colors.transparent,
+                                              ),
+                                              onTap: () {
+                                                print("bottom right");
+                                                if (sentenceCounter <
+                                                    arabicSentences.length) {
+                                                  sentenceCounter++;
+                                                }
+                                                print(
+                                                    'wordcount: $wordCounter');
+                                                print(
+                                                    'sentencecount:  $sentenceCounter');
+                                              },
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: GestureDetector(
+                                              child: Container(
+                                                color: Colors.transparent,
+                                              ),
+                                              onTap: () {
+                                                print("Bottom left");
+                                                sentenceCounter = 0;
+                                                print(
+                                                    'wordcount: $wordCounter');
+                                                print(
+                                                    'sentencecount:  $sentenceCounter');
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                )),
+                          ),
                         ],
                       ),
                     ),
@@ -201,4 +294,10 @@ class _MediaSizeClipper extends CustomClipper<Rect> {
   bool shouldReclip(CustomClipper<Rect> oldClipper) {
     return true;
   }
+}
+
+// set word in shared pref
+setWord(String word) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('word', word);
 }

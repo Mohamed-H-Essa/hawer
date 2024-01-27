@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
+        padding: EdgeInsets.all(0),
         child: Container(
           height: 60,
           width: 90,
