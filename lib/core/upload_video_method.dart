@@ -6,17 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:hawer_app/core/data.dart';
 
 Future<Either<String, String>> uploadVideo(File videoFile) async {
-  // SharedPreferences prefs = await SharedPreferences.getInstance();
-  // String word = prefs.getString('word') ?? '';
-  if (resultText.isNotEmpty) {
+  String localRes = resultText;
+  resultText = '';
+
+  if (localRes.isNotEmpty) {
   } else if (sentenceCounter == 0 && wordCounter == 0) {
-    resultText = arabicSentences[0]; // Return the first item in arabicSentences
+    // localRes = arabicSentences[0]; // Return the first item in arabicSentences
+    localRes = ''; // Return the first item in arabicSentences
   } else if (sentenceCounter == 0 && wordCounter > 0) {
-    resultText = arabicWords[wordCounter - 1]; // Return a word from arabicWords
+    localRes = arabicWords[wordCounter - 1]; // Return a word from arabicWords
   } else if (sentenceCounter > 0) {
-    resultText = arabicSentences[
+    localRes = arabicSentences[
         sentenceCounter - 1]; // Return a sentence from arabicSentences
   }
+
+  if (isGallery) {
+    localRes = arabicSentences[0];
+  }
+  isGallery = false;
   try {
     // return Left("Error uploading video: ");
     debugPrint(" Uploading video...");
@@ -41,10 +48,10 @@ Future<Either<String, String>> uploadVideo(File videoFile) async {
     print('Video uploaded successfully');
     // return Right(res.data['message']);
     // read word from shared preferences
-    return Right(resultText);
+    return Right(localRes);
   } catch (error) {
-    return Right(resultText);
+    // return Right(localRes);
     // print('Error uploading video: $error');
-    // return Left("Error uploading video: $error");
+    return Left("Error uploading video: $error");
   }
 }

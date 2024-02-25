@@ -23,6 +23,7 @@ class _UploadUsingCameraState extends State<UploadUsingCamera> {
   void initState() {
     _initializeCamera();
     super.initState();
+    isGallery = false;
     wordCounter = 0;
     sentenceCounter = 0;
     resultText = '';

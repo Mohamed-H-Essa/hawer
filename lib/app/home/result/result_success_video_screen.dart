@@ -72,7 +72,9 @@ class _ResultSuccessVideoScreenState extends State<ResultSuccessVideoScreen> {
                       Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            "برجاء كتابه الجمله صحيحه لأرسالها للمطور:",
+                            widget.feedback
+                                ? "برجاء كتابه الجمله صحيحه لأرسالها للمطور:"
+                                : "نتيجة العملية:",
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w900,
@@ -112,37 +114,42 @@ class _ResultSuccessVideoScreenState extends State<ResultSuccessVideoScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: widget.edit
-                      ? TextField(
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'اكتب هنا',
-                            hintStyle: TextStyle(
+                      ? Container(
+                          width: double.infinity,
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'اكتب هنا',
+                              hintStyle: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
                               fontSize: 20,
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
+                            onChanged: (value) {
+                              setState(() {
+                                newMessage = value;
+                              });
+                            },
                           ),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              newMessage = value;
-                            });
-                          },
                         )
-                      : Text(
-                          widget.resultMessage,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                      : Center(
+                          child: Text(
+                            widget.resultMessage,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                 ),
                 const SizedBox(
